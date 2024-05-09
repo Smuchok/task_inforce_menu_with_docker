@@ -9,7 +9,7 @@ That is my solution
 
 ### Dependences
 
-| Pip library            | Version     |
+| Pip library          | Version  |
 | :--------------------| :------- |
 |asgiref               | 3.8.1 |
 |Django                | 5.0.6 |
@@ -24,6 +24,26 @@ That is my solution
 #### pip install
 ```pip
 pip install django, djangorestframework, psycopg2, psycopg2-binary 
+```
+
+## Database
+PostgreSQL 16
+You should restore `inforce_menus_backup.sql` file.
+And change `NAME` parameter in `settings.py` in order to name of restored database
+```python
+# settings.py
+...
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'inforce_menus',
+        'USER': 'postgres',
+        'PASSWORD': '1234',
+        'HOST': '127.0.0.1', 
+        'PORT': '5432',
+    }
+}
+...
 ```
 
 ## Project structure
@@ -73,7 +93,7 @@ Show all menus from all restaurans and days
 
 | Parameter | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
-| `day`      | `int` | **Required**. Day identificator |
+| `day`     | `int`    | **Required**. Day identificator |
 
 This request returns JSON like a:
 ```json
@@ -103,12 +123,12 @@ This request returns JSON like a:
 
 Structure
 | JSON Parameter | Type     | Description                       |
-| :-------- | :------- | :-------------------------------- |
-| `title`      | `int` | Title name of new menu |
-| `price`      | `float` | Price of menu |
-| `restaurant`      | `int` | Restaurant id. Foreign key |
+| :--------   | :------- | :-------------------------------- |
+| `title`     | `int` | Title name of new menu |
+| `price`     | `float` | Price of menu |
+| `restaurant`| `int` | Restaurant id. Foreign key |
 | `menu`      | `json` | Some menu staff in JSON format |
-| `day`      | `int` | Day identificator |
+| `day`       | `int` | Day identificator |
 
 
 ### Add new menu
@@ -122,9 +142,9 @@ POST method include JSON
 | :-------- | :------- | :-------------------------------- |
 | `title`      | `int` | **Required**. Title name of new menu |
 | `price`      | `float` | **Required**. Price of menu |
-| `restaurant`      | `int` | **Required**. Restaurant id. Foreign key |
-| `menu`      | `json` | **Required**. Some menu staff in JSON format |
-| `day`      | `int` | **Required**. Day identificator |
+| `restaurant` | `int` | **Required**. Restaurant id. Foreign key |
+| `menu`       | `json` | **Required**. Some menu staff in JSON format |
+| `day`        | `int` | **Required**. Day identificator |
 
 
 ### Others requests
@@ -134,21 +154,21 @@ POST method include JSON
   POST /login/
 ```
 Login employee. If username and password are valid, do logining
-| Parameter | Type     | Description                       |
-| :-------- | :------- | :-------------------------------- |
-| `username`      | `str` | Username of employee |
-| `password`      | `str` | Password to account |
+| Parameter       | Type     | Description                       |
+| :--------       | :------- | :-------------------------------- |
+| `username`      | `str`   | Username of employee |
+| `password`      | `str`   | Password to account |
 
 #### Show all restaurants
 ```http
   GET /employees/
 ```
 Returns all employees is JSON format
-| JSON Parameter | Type     | Description                       |
-| :-------- | :------- | :-------------------------------- |
+| JSON Parameter  | Type     | Description                       |
+| :--------       | :------- | :-------------------------------- |
 | `username`      | `str` | Username of employee |
 | `password`      | `str` | Password to account |
-| `email`      | `str` | Email of employee |
+| `email`         | `str` | Email of employee |
 
 
 #### Show all employees
@@ -156,21 +176,10 @@ Returns all employees is JSON format
   GET /ress/
 ```
 Returns all restaurants is JSON format
-| JSON Parameter | Type     | Description                       |
-| :-------- | :------- | :-------------------------------- |
+| JSON Parameter  | Type     | Description                       |
+| :--------       | :------- | :-------------------------------- |
 | `username`      | `str` | Username of restaurant's administator |
 | `password`      | `str` | Password to account |
-| `name`      | `str` | Restaurant's name |
+| `name`          | `str` | Restaurant's name |
 | `addrress`      | `str` | Restaurant's addrress |
-
-
-## Usage/Examples
-
-```javascript
-import Component from 'my-project'
-
-function App() {
-  return <Component />
-}
-```
 
