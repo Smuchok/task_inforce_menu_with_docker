@@ -140,7 +140,19 @@ Structure
   POST /new_menu/
 ```
 
-POST method include JSON
+POST method include JSON. JSON have to looks like:
+```json
+{
+    "title": "menu name 222",
+    "price": 222.22,
+    "restaurant": 1,
+    "menu": {
+        "menu": "some json staff 222"
+    },
+    "day": 3
+}
+```
+
 | JSON Parameter | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
 | `title`      | `int` | **Required**. Title name of new menu |
@@ -150,9 +162,28 @@ POST method include JSON
 | `day`        | `int` | **Required**. Day identificator |
 
 
-### Others requests
+### Createa employee
+```http
+  POST /create_employee/
+```
+Create new employee.
 
-#### Login user
+JSON have to looks like:
+```json
+{
+    "username": "user_222",
+    "password": "1234",
+    "email": "e222@email.com"
+}
+```
+
+| Parameter       | Type     | Description                       |
+| :--------       | :------- | :-------------------------------- |
+| `username`      | `str`   | Username of employee |
+| `password`      | `str`   | Password |
+| `email`         | `str`   | Email |
+
+### Login user
 ```http
   POST /login/
 ```
@@ -161,6 +192,9 @@ Login employee. If username and password are valid, send tokens
 | :--------       | :------- | :-------------------------------- |
 | `username`      | `str`   | Username of employee |
 | `password`      | `str`   | Password to account |
+
+
+### Others requests
 
 #### Show all restaurants
 ```http
