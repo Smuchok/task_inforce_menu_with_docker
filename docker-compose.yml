@@ -1,0 +1,20 @@
+version: '3.9'
+
+services:
+  db:
+    image: postgres:16
+    container_name: postgres_menu_con
+    env_file:
+      - .env
+  
+  django:
+    image: inforce_task_menu:latest
+    container_name: djnago_con
+    ports: 
+      - "8000:8000"
+    depends_on:
+      - db
+    env_file:
+      - .env
+    command: >
+      bash -c "ls && dos2unix inforce_menus/manage.py && inforce_menus/manage.py makemigrations && inforce_menus/manage.py migrate && inforce_menus/manage.py test && inforce_menus/manage.py runserver 0.0.0.0:8000"

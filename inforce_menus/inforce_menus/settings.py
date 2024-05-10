@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,7 +26,9 @@ SECRET_KEY = 'django-insecure-6l2mp6@lukf_83nj$2kdhaab4zv$ch1e7o1$34w1kb+@a1)fs@
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    '127.0.0.1', 'localhost', '0.0.0.0'
+]
 
 
 # Application definition
@@ -82,13 +85,22 @@ DATABASES = {
     #     'NAME': BASE_DIR / 'db.sqlite3',
     # },
 
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
+    #     'NAME': 'inforce_menus', 
+    #     'USER': 'postgres',
+    #     'PASSWORD': '1234',
+    #     'HOST': '127.0.0.1', 
+    #     'PORT': '5432',
+    # }
+
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'inforce_menus', 
-        'USER': 'postgres',
-        'PASSWORD': '1234',
-        'HOST': '127.0.0.1', 
-        'PORT': '5432',
+        'NAME': os.getenv('POSTGRES_DB', 'inforce_menus'), 
+        'USER': os.getenv('POSTGRES_USER', 'postgres'),
+        'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
+        'HOST': os.getenv('POSTGRES_HOST', 'db'), 
+        'PORT': os.getenv('POSTGRES_PORT', '5432'),
     }
 }
 
