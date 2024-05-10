@@ -5,6 +5,9 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import status
 from rest_framework.views import APIView
+from django.http import JsonResponse
+from django.core.serializers import serialize
+import json
 
 from .models import Employee, Restaurant, Menu
 from .serializer import *
@@ -29,6 +32,15 @@ def get_menus_by_day(request, day):
     app = Menu.objects.filter(day=day)
     serializer = MenuSerializer(app, many=True)
     return Response(serializer.data)
+
+
+class CreateEmployeeAPIView(APIView):
+    def post(self, request, *args, **kwargs):
+        data = request.data.copy()
+        serializer = EmployeeSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+        return Response(serializer.data)
 
 
 class PostMenuAPIView(APIView):

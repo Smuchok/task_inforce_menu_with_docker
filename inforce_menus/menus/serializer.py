@@ -18,7 +18,8 @@ class MenuSerializer(serializers.ModelSerializer):
 class MenuByDaySerializer(serializers.BaseSerializer):
     class Meta:
         fields = (
-            'day'
+            'day',
+            'menu'
         )
 
 
