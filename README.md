@@ -7,7 +7,8 @@ using the system every day over API.
 
 That is my solution
 
-I described step by step how to run my project
+I described step by step how to run Docker.
+For some reason I can't updoad my Docker image to Docker Hub, so there step how build and run it
 
 ### Dependences
 
@@ -25,90 +26,23 @@ I described step by step how to run my project
 |sqlparse              | 0.5.0 |
 |tzdata                | 2024.1 |
 
+They are stored in `requirements.txt` file
 
-#### pip install
-```pip
-pip install -r requirements.txt
-```
-or
-```pip
-pip install django, djangorestframework, psycopg2, psycopg2-binary, djangorestframework-simplejwt
-```
 
 ## Run
-To skip steps 2-3, you can run `init.bat` file instead:
+
+1. Create docker build
 ```bash
-init.bat
+docker build -t inforce_task_menu .
 ```
 
-
-### 1. Git Clone
-Project name is `inforce_menus`, app name is `menus`
+2. Run Docker compose command
 ```bash
-git clone https://github.com/Smuchok/task_inforce_menu
+docker compose up
 ```
-
-Structure:
-```bash
-init.bat
-inforce_menus_backup.sql
-requirements.txt
-README.md
-inforce_menus
-├───inforce_menus
-│   ├───settings.py
-│   └───urls.py
-│   ...
-│
-├───menus
-│   ├───models.py
-│   ├───views.py
-│   ├───urls.py
-│   └───tests.py
-│   ...
-│
-└───manage.py
-```
-
-### 2. Venv
-
-Create venv
-```bash
-python -m venv venv
-```
+Sometimes step №2 need to stop (ctrl+c) and run again
 
 
-
-#### pip install
-```pip
-pip install -r requirements.txt
-```
-
-
-### Database
-PostgreSQL 16
-You should restore `inforce_menus_backup.sql` file.
-And change `NAME` parameter in `settings.py` in order to name of restored database
-```python
-# settings.py
-...
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'inforce_menus',
-        'USER': 'postgres',
-        'PASSWORD': '1234',
-        'HOST': '127.0.0.1', 
-        'PORT': '5432',
-    }
-}
-...
-```
-
-#### Run Server
-```bash
-py manage.py runserver
-```
 ## API Reference
 
 ### Get all menus
