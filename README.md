@@ -183,3 +183,37 @@ Returns all restaurants is JSON format
 | `name`          | `str` | Restaurant's name |
 | `addrress`      | `str` | Restaurant's addrress |
 
+
+## Running Tests
+
+### to run all tests:
+```bash
+py manage.py test
+```
+
+### Tests description
+There are 4 tests in `tests.py`
+
+#### test_user_login
+Test login user. Check if the response contains the 'refresh' and 'access' tokens
+```bash
+py manage.py test menus.tests.UserLoginAPITestCase.test_user_login
+```
+
+#### test_invalid_password
+Test login user by invalid password. Check if the response status code is 400
+```bash
+py manage.py test menus.tests.UserLoginAPITestCase.test_invalid_password
+```
+
+#### test_create_menus
+Check if possible add new menu
+```bash
+py manage.py test menus.tests.MenuTestCase.test_create_menus
+```
+
+#### test_get_menus_by_day
+Check if the respone have list of menus by a specific day
+```bash
+py manage.py test menus.tests.MenuTestCase.test_get_menus_by_day
+```

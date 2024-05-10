@@ -26,12 +26,6 @@ def get_menus(request):
 
 @api_view(['GET', 'POST'])
 def get_menus_by_day(request, day):
-    if request.method == 'POST ':
-        print('POSTPOST')
-        app = Menu.objects.filter(day=2)
-        serializer = MenuByDaySerializer(app, many=True)
-        return Response(serializer.data)
-    
     app = Menu.objects.filter(day=day)
     serializer = MenuSerializer(app, many=True)
     return Response(serializer.data)
