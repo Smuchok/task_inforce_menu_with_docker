@@ -7,6 +7,8 @@ using the system every day over API.
 
 That is my solution
 
+I described step by step how to run my project
+
 ### Dependences
 
 | Pip library          | Version  |
