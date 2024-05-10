@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import Employee, Restaurant, Menu
+from rest_framework_simplejwt.tokens import RefreshToken
 
 
 class MenuSerializer(serializers.ModelSerializer):
@@ -70,30 +71,39 @@ class RegisterEmployeeSerializer(serializers.ModelSerializer):
         return user
     
 
-from django.contrib.auth import authenticate, get_user_model
-from django.utils.translation import gettext_lazy as _
-from rest_framework import serializers
-
-User = get_user_model()
-
-
-class LoginSerializers(serializers.Serializer):
-    email = serializers.CharField()
+class UserLoginSerializer(serializers.ModelSerializer):
+    username = serializers.CharField()
     password = serializers.CharField()
 
+    class Meta:
+        model=Employee
+        fields=(
+            'username',
+            'password',
+        )
+
     def validate(self, data):
-        username = data.get('email')
-        password = data.get('password')
+        username = data.get('username', None)
+        password = data.get('password', None)
 
-        if username and password:
-            user = authenticate(request=self.context.get('request'),
-                                username=username, password=password)
-            if not user:
-                msg = _('Unable to log in with provided credentials.')
-                raise serializers.ValidationError(msg, code='authorization')
+        if not username or not password:
+            raise serializers.ValidationError('Username and password are required.')
+
+        user = Employee.objects.filter(username=username).first()
+        
+        # if there is user
+        if user:
+            actual_password = user.password
         else:
-            msg = _('Must include "username" and "password".')
-            raise serializers.ValidationError(msg, code='authorization')
+            raise serializers.ValidationError('Invalid username')
 
-        data['user'] = user
+        # if user is None or not user.check_password(password):
+        if password != actual_password:
+            raise serializers.ValidationError('Invalid password.')
+
+        refresh = RefreshToken.for_user(user)
+        data['tokens'] = {
+            'refresh': str(refresh),
+            'access': str(refresh.access_token),
+        }
         return data

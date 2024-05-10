@@ -153,7 +153,7 @@ POST method include JSON
 ```http
   POST /login/
 ```
-Login employee. If username and password are valid, do logining
+Login employee. If username and password are valid, send tokens
 | Parameter       | Type     | Description                       |
 | :--------       | :------- | :-------------------------------- |
 | `username`      | `str`   | Username of employee |

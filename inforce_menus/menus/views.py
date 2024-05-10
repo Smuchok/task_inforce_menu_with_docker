@@ -3,6 +3,8 @@ from django.http import HttpResponse
 
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
+from rest_framework import status
+from rest_framework.views import APIView
 
 from .models import Employee, Restaurant, Menu
 from .serializer import *
@@ -35,6 +37,23 @@ def get_menus_by_day(request, day):
     return Response(serializer.data)
 
 
+class PostMenuAPIView(APIView):
+    def post(self, request, *args, **kwargs):
+        data = request.data.copy()
+        # data['restaurant'] = Restaurant.objects.get(id=data['restaraunt']))
+        serializer = MenuSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+        return Response(serializer.data)
+
+
+class UserLoginAPIView(APIView):
+    def post(self, request, *args, **kwargs):
+        serializer = UserLoginSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        return Response(serializer.validated_data['tokens'], status=status.HTTP_200_OK)
+
+
 @api_view(['GET'])  # get restaurants
 def get_ress(request):
     app = Restaurant.objects.all()
@@ -46,32 +65,4 @@ def get_ress(request):
 def get_employees(request):
     app = Employee.objects.all()
     serializer = EmployeeSerializer(app, many=True)
-    return Response(serializer.data)
-
-
-@api_view(['POST'])
-def post_menu(request):
-    data = request.data.copy()
-    # data['restaurant'] = Restaurant.objects.get(id=data['restaraunt']))
-    serializer = MenuSerializer(data=data)
-    if serializer.is_valid():
-        serializer.save()
-    return Response(serializer.data)
-
-
-@api_view(['POST'])
-def login_user(request):
-    form = LoginEmployeeForm # AuthenticationForm
-    # import pdb; pdb.set_trace() #debug
-
-    # if request.method == 'POST':
-    #     username = request.POST['username']
-    #     password = request.POST['password']
-    #     user = authenticate(request, username=username, password=password)
-    #     if user is not None:
-    #         login(request, user)
-    
-    print(request)
-    serializer.is_valid(raise_exception=True)
-    serializer = LoginSerializers(data=request.data)
     return Response(serializer.data)
