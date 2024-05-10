@@ -26,10 +26,64 @@ That is my solution
 
 #### pip install
 ```pip
+pip install -r requirements.txt
+```
+or
+```pip
 pip install django, djangorestframework, psycopg2, psycopg2-binary, djangorestframework-simplejwt
 ```
 
-## Database
+## Run
+To skip steps 2-3, you can run `init.bat` file instead:
+```bash
+init.bat
+```
+
+
+### 1. Git Clone
+Project name is `inforce_menus`, app name is `menus`
+```bash
+git clone https://github.com/Smuchok/task_inforce_menu
+```
+
+Structure:
+```bash
+init.bat
+inforce_menus_backup.sql
+requirements.txt
+README.md
+inforce_menus
+├───inforce_menus
+│   ├───settings.py
+│   └───urls.py
+│   ...
+│
+├───menus
+│   ├───models.py
+│   ├───views.py
+│   ├───urls.py
+│   └───tests.py
+│   ...
+│
+└───manage.py
+```
+
+### 2. Venv
+
+Create venv
+```bash
+python -m venv venv
+```
+
+
+
+#### pip install
+```pip
+pip install -r requirements.txt
+```
+
+
+### Database
 PostgreSQL 16
 You should restore `inforce_menus_backup.sql` file.
 And change `NAME` parameter in `settings.py` in order to name of restored database
@@ -49,34 +103,9 @@ DATABASES = {
 ...
 ```
 
-## Project structure
-Project name is `inforce_menus`, app name is `menus`
-
+#### Run Server
 ```bash
-inforce_menus
-├───inforce_menus
-│   ├───settings.py
-│   └───urls.py
-│   ...
-│
-├───menus
-│   ├───models.py
-│   ├───views.py
-│   ├───urls.py
-│   └───tests.py
-│   ...
-│
-└───manage.py
-```
-
-How to run
-```cmd
 py manage.py runserver
-```
-
-How to run tests
-```cmd
-py manage.py test
 ```
 ## API Reference
 
